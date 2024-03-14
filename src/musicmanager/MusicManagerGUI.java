@@ -19,15 +19,20 @@ import javax.swing.JOptionPane;
 public class MusicManagerGUI extends javax.swing.JFrame {
 private boolean otherButtonClicked = false;
 
+
     /**
      * Creates new form MusicManagerGUI
      */
     
     StackInterface stackInterface;
+    DLLinterface playlist1;
+    DLLinterface playlist2;
     
     public MusicManagerGUI() {
         initComponents();
         stackInterface = new LikedMusicStack();
+        playlist1 = new PlaylistDLL();
+        playlist2 = new PlaylistDLL();
         Load();
         musicCount();
     }
@@ -48,16 +53,18 @@ private boolean otherButtonClicked = false;
         stackClearBtn = new javax.swing.JButton();
         stackDisplayBtn = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        likedCountTF = new javax.swing.JLabel();
+        likedCountLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         musicManagerTA = new javax.swing.JTextArea();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        addPlaylist1Btn = new javax.swing.JButton();
+        addPlaylist2Btn = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         exitBtn = new javax.swing.JButton();
         stackDltBtn = new javax.swing.JButton();
+        playlist1CountLabel = new javax.swing.JLabel();
+        playlist2CountLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -91,18 +98,28 @@ private boolean otherButtonClicked = false;
 
         jLabel3.setText("Add new song to your Playlists");
 
-        likedCountTF.setText("Currently you have \"x\" song in liked list");
+        likedCountLabel.setText("Currently you have \"x\" song in liked list");
 
         musicManagerTA.setColumns(20);
         musicManagerTA.setLineWrap(true);
         musicManagerTA.setRows(5);
         jScrollPane1.setViewportView(musicManagerTA);
 
-        jButton4.setText("Playlist 1");
-        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        addPlaylist1Btn.setText("Add playlist 1");
+        addPlaylist1Btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        addPlaylist1Btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addPlaylist1BtnActionPerformed(evt);
+            }
+        });
 
-        jButton5.setText("Playlist 2");
-        jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        addPlaylist2Btn.setText("Add playlist 2");
+        addPlaylist2Btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        addPlaylist2Btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addPlaylist2BtnActionPerformed(evt);
+            }
+        });
 
         jLabel8.setText("Now playing \"random song\" from \"Playlist 1\"");
 
@@ -118,12 +135,16 @@ private boolean otherButtonClicked = false;
             }
         });
 
-        stackDltBtn.setText("Delete last added song");
+        stackDltBtn.setText("Delete last song");
         stackDltBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 stackDltBtnActionPerformed(evt);
             }
         });
+
+        playlist1CountLabel.setText("jLabel4");
+
+        playlist2CountLabel.setText("jLabel4");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -135,10 +156,16 @@ private boolean otherButtonClicked = false;
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
-                            .addComponent(jButton4)
-                            .addComponent(jButton5))
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(addPlaylist1Btn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(playlist1CountLabel))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(addPlaylist2Btn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(playlist2CountLabel)))
+                        .addGap(87, 87, 87)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -151,7 +178,7 @@ private boolean otherButtonClicked = false;
                                 .addComponent(jLabel2))
                             .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(likedCountTF))
+                                .addComponent(likedCountLabel))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(65, 65, 65)
                                 .addComponent(jLabel8))
@@ -162,7 +189,7 @@ private boolean otherButtonClicked = false;
                                 .addComponent(stackDisplayBtn)
                                 .addGap(18, 18, 18)
                                 .addComponent(stackDltBtn)))
-                        .addGap(0, 15, Short.MAX_VALUE)))
+                        .addGap(0, 57, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(80, 80, 80)
@@ -185,7 +212,7 @@ private boolean otherButtonClicked = false;
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(likedCountTF)
+                .addComponent(likedCountLabel)
                 .addGap(4, 4, 4)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(newMusicTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -200,9 +227,13 @@ private boolean otherButtonClicked = false;
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton4)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(addPlaylist1Btn)
+                            .addComponent(playlist1CountLabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton5))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(addPlaylist2Btn)
+                            .addComponent(playlist2CountLabel)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -233,8 +264,8 @@ private boolean otherButtonClicked = false;
             
             oStream.writeObject(stackInterface);
             
-            // oStream.writeObject(playlist);
-            // oStream.writeObject(playlist2);
+            oStream.writeObject(playlist1);
+            oStream.writeObject(playlist2);
             
             oStream.close();
             return true; 
@@ -257,8 +288,8 @@ private boolean otherButtonClicked = false;
             
             stackInterface = (LikedMusicStack) oStream.readObject();
             
-            // playlist = (LinkedList<Song>) oStream.readObject(); 
-            // playlist2 = (LinkedList<Song>) oStream.readObject();
+            playlist1 = (PlaylistDLL) oStream.readObject(); 
+            playlist2 = (PlaylistDLL) oStream.readObject();
        
             oStream.close();
             
@@ -268,10 +299,25 @@ private boolean otherButtonClicked = false;
     }
     private void musicCount() {
         int likedCount = stackInterface.size();
+        int playlist1Count = playlist1.size();
+        int playlist2Count = playlist2.size();
+        
         if(!stackInterface.isEmpty()) {
-            likedCountTF.setText("Currently you have '"+ likedCount+ "' song in liked list");
+            likedCountLabel.setText("Currently you have '"+ likedCount+ "' song in liked list");
         } else {
-            likedCountTF.setText("Currently you don't have any liked music");
+            likedCountLabel.setText("Currently you don't have any liked music");
+        }
+        
+        if(!playlist1.isEmpty()) {
+           playlist1CountLabel.setText("There are " + playlist1Count + " songs in this playlist"); 
+        } else {
+           playlist1CountLabel.setText("Currently you don't have any music in this playlist");
+        }
+        
+        if(!playlist2.isEmpty()) {
+            playlist2CountLabel.setText("There are " + playlist2Count + " songs in this playlist"); 
+        } else {
+           playlist2CountLabel.setText("Currently you don't have any music in this playlist");
         }
     }
     
@@ -310,7 +356,7 @@ private boolean otherButtonClicked = false;
 
     private void stackDisplayBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stackDisplayBtnActionPerformed
         // TODO add your handling code here:
-otherButtonClicked = true;
+        otherButtonClicked = true;
         if(!stackInterface.isEmpty()) {
             String likedMusics = stackInterface.displayStack();
             musicManagerTA.setText(likedMusics);
@@ -327,9 +373,9 @@ otherButtonClicked = true;
     private void stackDltBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stackDltBtnActionPerformed
         // TODO add your handling code here:
         if(!stackInterface.isEmpty()) {
-            String outLikedMusic;
-            outLikedMusic = (String) stackInterface.pop();
-            musicManagerTA.append(outLikedMusic + " is deleted from your liked list \n");
+            String outLikedSong;
+            outLikedSong = (String) stackInterface.pop();
+            musicManagerTA.append(outLikedSong + " is deleted from your liked list \n");
             Save();
             musicCount();
         } else { 
@@ -337,6 +383,46 @@ otherButtonClicked = true;
             otherButtonClicked = true;
         }
     }//GEN-LAST:event_stackDltBtnActionPerformed
+
+    private void addPlaylist1BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPlaylist1BtnActionPerformed
+        // TODO add your handling code here:
+        if(otherButtonClicked){
+            musicManagerTA.setText("");
+            otherButtonClicked =false;
+        }
+        if(!stackInterface.isEmpty()) {
+            String lastLikedSong;
+            lastLikedSong = (String) stackInterface.peek();
+            
+            if(!playlist1.contains(lastLikedSong)) {
+                playlist1.add(1, lastLikedSong);
+                musicManagerTA.append(lastLikedSong + " added to your playlist 1 \n" );
+                musicCount();
+            } else {
+                musicManagerTA.append("The song is already in the playlist \n");
+            }
+        } else {
+            musicManagerTA.setText("You don't have any liked songs \n");
+        }
+    }//GEN-LAST:event_addPlaylist1BtnActionPerformed
+
+    private void addPlaylist2BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPlaylist2BtnActionPerformed
+        // TODO add your handling code here:
+        if(!stackInterface.isEmpty()) {
+            String lastLikedSong;
+            lastLikedSong = (String) stackInterface.peek();
+            
+            if(!playlist2.contains(lastLikedSong)) {
+                playlist2.add(1, lastLikedSong);
+                musicManagerTA.append(lastLikedSong + "added to your playlist 2" );
+                musicCount();
+            } else {
+                musicManagerTA.append("The song is already in the playlist");
+            }
+        } else {
+            musicManagerTA.setText("You don't have any liked songs");
+        }
+    }//GEN-LAST:event_addPlaylist2BtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -374,9 +460,9 @@ otherButtonClicked = true;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addPlaylist1Btn;
+    private javax.swing.JButton addPlaylist2Btn;
     private javax.swing.JButton exitBtn;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
@@ -384,9 +470,11 @@ otherButtonClicked = true;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel likedCountTF;
+    private javax.swing.JLabel likedCountLabel;
     private javax.swing.JTextArea musicManagerTA;
     private javax.swing.JTextField newMusicTF;
+    private javax.swing.JLabel playlist1CountLabel;
+    private javax.swing.JLabel playlist2CountLabel;
     private javax.swing.JButton stackAddBtn;
     private javax.swing.JButton stackClearBtn;
     private javax.swing.JButton stackDisplayBtn;
