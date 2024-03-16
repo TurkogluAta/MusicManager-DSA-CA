@@ -65,6 +65,8 @@ public class ManageLikedGUI extends javax.swing.JFrame {
         ManageLiked = new javax.swing.JMenuItem();
         managePlaylistMenu = new javax.swing.JMenu();
         managePlaylists = new javax.swing.JMenuItem();
+        musicPlayerMenu = new javax.swing.JMenu();
+        musicPlayer = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(400, 650));
@@ -221,12 +223,11 @@ public class ManageLikedGUI extends javax.swing.JFrame {
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(addLikedPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(likedControlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(exitBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(mainPanelLayout.createSequentialGroup()
-                            .addGap(76, 76, 76)
-                            .addComponent(appLabel))))
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addGap(76, 76, 76)
+                        .addComponent(appLabel)))
                 .addContainerGap())
+            .addComponent(exitBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -269,6 +270,18 @@ public class ManageLikedGUI extends javax.swing.JFrame {
         managePlaylistMenu.add(managePlaylists);
 
         navBar.add(managePlaylistMenu);
+
+        musicPlayerMenu.setText("Music Player");
+
+        musicPlayer.setText("Music Player");
+        musicPlayer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                musicPlayerActionPerformed(evt);
+            }
+        });
+        musicPlayerMenu.add(musicPlayer);
+
+        navBar.add(musicPlayerMenu);
 
         setJMenuBar(navBar);
 
@@ -326,8 +339,8 @@ public class ManageLikedGUI extends javax.swing.JFrame {
 
     private void stackAddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stackAddBtnActionPerformed
         // TODO add your handling code here:
-        String songName = newMusicTF.getText();
-        String artistName = artistTF.getText();
+        String songName = newMusicTF.getText().trim();
+        String artistName = artistTF.getText().trim();
 
         newMusicTF.setText("");
         artistTF.setText("");
@@ -431,6 +444,20 @@ public class ManageLikedGUI extends javax.swing.JFrame {
         managePlaylistsGUI.setVisible(true);
     }//GEN-LAST:event_managePlaylistsActionPerformed
 
+    private void musicPlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_musicPlayerActionPerformed
+        // TODO add your handling code here:
+        Point currentLocation = this.getLocation();
+
+        this.setVisible(false);
+        this.dispose();
+
+        musicPlayerGUI playerGUI = new musicPlayerGUI(stackInterface, playlist1, playlist2);
+
+        playerGUI.setLocation(currentLocation);
+
+        playerGUI.setVisible(true);
+    }//GEN-LAST:event_musicPlayerActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -486,6 +513,8 @@ public class ManageLikedGUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem managePlaylists;
     private javax.swing.JScrollPane musicManagerSP;
     private javax.swing.JTextArea musicManagerTA;
+    private javax.swing.JMenuItem musicPlayer;
+    private javax.swing.JMenu musicPlayerMenu;
     private javax.swing.JMenuBar navBar;
     private javax.swing.JTextField newMusicTF;
     private javax.swing.JLabel songNameLabel;

@@ -70,6 +70,8 @@ public class ManagePlaylistsGUI extends javax.swing.JFrame {
         ManageLiked = new javax.swing.JMenuItem();
         managePlaylistMenu = new javax.swing.JMenu();
         managePlaylists = new javax.swing.JMenuItem();
+        musicPlayerMenu = new javax.swing.JMenu();
+        musicPlayer = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -315,6 +317,18 @@ public class ManagePlaylistsGUI extends javax.swing.JFrame {
 
         navBar.add(managePlaylistMenu);
 
+        musicPlayerMenu.setText("Music Player");
+
+        musicPlayer.setText("Music Player");
+        musicPlayer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                musicPlayerActionPerformed(evt);
+            }
+        });
+        musicPlayerMenu.add(musicPlayer);
+
+        navBar.add(musicPlayerMenu);
+
         setJMenuBar(navBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -357,13 +371,13 @@ public class ManagePlaylistsGUI extends javax.swing.JFrame {
         if (!playlist1.isEmpty()) {
             playlist1CountLabel.setText("Currently you have '" + playlist1Count + "' song in Rock playlist.");
         } else {
-            playlist1CountLabel.setText("Currently you don't have any song in Rock playlist");
+            playlist1CountLabel.setText("Currently you don't have any song in Rock playlist.");
         }
 
         if (!playlist2.isEmpty()) {
             playlist2CountLabel.setText("Currently you have '" + playlist2Count + "' song in Classical music playlist.");
         } else {
-            playlist2CountLabel.setText("Currently you don't have any song in Classical music playlist");
+            playlist2CountLabel.setText("Currently you don't have any song in Classical music playlist.");
         }
     }
 
@@ -384,24 +398,24 @@ public class ManagePlaylistsGUI extends javax.swing.JFrame {
 
             if (selectedIndex == 0) {
                 if (indexInPlaylist1 > 0) {
-                    musicManagerTA.append("The song is already in your Rock playlist \n");
+                    musicManagerTA.append("The song is already in your Rock playlist.\n");
                 } else {
                     playlist1.add(playlist1.size() + 1, lastLikedSong);
-                    musicManagerTA.append(lastLikedSong + " added to your Rock playlist\n");
+                    musicManagerTA.append(lastLikedSong + " added to your Rock playlist.\n");
                     musicCountPlaylist();
                 }
             } else if (selectedIndex == 1) {
                 if (indexInPlaylist2 > 0) {
-                    musicManagerTA.append("The song is already in your Classical music playlist \n");
+                    musicManagerTA.append("The song is already in your Classical music playlist. \n");
                 } else {
                     playlist2.add(playlist2.size() + 1, lastLikedSong);
-                    musicManagerTA.append(lastLikedSong + " added to your Classical music playlist\n");
+                    musicManagerTA.append(lastLikedSong + " added to your Classical music playlist.\n");
                     musicCountPlaylist();
                 }
             }
             Save();
         } else {
-            musicManagerTA.setText("You don't have any liked songs \n");
+            musicManagerTA.setText("You don't have any liked songs.\n");
         }
     }//GEN-LAST:event_addPlaylistBtnActionPerformed
 
@@ -409,7 +423,7 @@ public class ManagePlaylistsGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         otherButtonClicked = true;
         if (!playlist1.isEmpty() || !playlist2.isEmpty()) {
-            String searchTerm = JOptionPane.showInputDialog(null, "Please enter a search term");
+            String searchTerm = JOptionPane.showInputDialog(null, "Please enter a search term.");
 
             if (searchTerm == null || searchTerm.isEmpty()) {
                 return;
@@ -428,10 +442,10 @@ public class ManagePlaylistsGUI extends javax.swing.JFrame {
                     musicManagerTA.setText("This song is not in any of your playlists");
                 }
             } else {
-                musicManagerTA.setText("Please enter a valid search term");
+                musicManagerTA.setText("Please enter a valid search term.");
             }
         } else {
-            musicManagerTA.setText("Your playlists are empty");
+            musicManagerTA.setText("Your playlists are empty.");
         }
     }//GEN-LAST:event_searchBtnActionPerformed
 
@@ -442,11 +456,11 @@ public class ManagePlaylistsGUI extends javax.swing.JFrame {
             otherButtonClicked = false;
         }
         if (playlist1.isEmpty() && playlist2.isEmpty()) {
-            musicManagerTA.setText("Your playlists are empty");
+            musicManagerTA.setText("Your playlists are empty.");
             return;
         }
 
-        String deleteTerm = JOptionPane.showInputDialog(null, "Please enter a song name for delete");
+        String deleteTerm = JOptionPane.showInputDialog(null, "Please enter a song name for delete.");
         if (deleteTerm == null || deleteTerm.trim().isEmpty()) {
             return;
         }
@@ -473,7 +487,7 @@ public class ManagePlaylistsGUI extends javax.swing.JFrame {
             musicData removedSong2 = playlist2.remove(indexInPlaylist2);
             musicManagerTA.append(removedSong2.toString() + " deleted from your Classical music playlist.\n");
         } else {
-            musicManagerTA.append("This song is not in any of your playlists \n");
+            musicManagerTA.append("This song is not in any of your playlists.\n");
         }
 
         musicCountPlaylist();
@@ -483,7 +497,7 @@ public class ManagePlaylistsGUI extends javax.swing.JFrame {
     private void moveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moveBtnActionPerformed
         // TODO add your handling code here:
         if (playlist1.isEmpty() && playlist2.isEmpty()) {
-            musicManagerTA.setText("Your playlists are empty");
+            musicManagerTA.setText("Your playlists are empty.");
             return;
         }
 
@@ -508,7 +522,7 @@ public class ManagePlaylistsGUI extends javax.swing.JFrame {
         }
 
         if (sourcePlaylist.isEmpty()) {
-            musicManagerTA.setText("Source playlist is empty");
+            musicManagerTA.setText("Source playlist is empty.");
             return;
         }
 
@@ -557,11 +571,11 @@ public class ManagePlaylistsGUI extends javax.swing.JFrame {
         if (selectedIndex == 0 && !playlist1.isEmpty()) {
             musicManagerTA.setText(playlist1.printList());
         } else if (selectedIndex == 0 && playlist1.isEmpty()) {
-            musicManagerTA.setText("Playlist1 bos");
+            musicManagerTA.setText("Rock playlist is empty.");
         } else if (selectedIndex == 1 && !playlist2.isEmpty()) {
             musicManagerTA.setText(playlist2.printList());
         } else if (selectedIndex == 1 && playlist2.isEmpty()) {
-            musicManagerTA.setText("Playlist2 bos");
+            musicManagerTA.setText("Classical music playlist is empty.");
         }
     }//GEN-LAST:event_displayPlaylistBtnActionPerformed
 
@@ -610,11 +624,11 @@ public class ManagePlaylistsGUI extends javax.swing.JFrame {
         if (selectedIndex == 0 && !playlist1.isEmpty()) {
             musicManagerTA.setText(playlist1.printListBack());
         } else if (selectedIndex == 0 && playlist1.isEmpty()) {
-            musicManagerTA.setText("Playlist1 bos");
+            musicManagerTA.setText("Rock playlist is empty.");
         } else if (selectedIndex == 1 && !playlist2.isEmpty()) {
             musicManagerTA.setText(playlist2.printListBack());
         } else if (selectedIndex == 1 && playlist2.isEmpty()) {
-            musicManagerTA.setText("Playlist2 bos");
+            musicManagerTA.setText("Classical music playlist is empty.");
         }
     }//GEN-LAST:event_displayPlaylistBwdBtnActionPerformed
 
@@ -629,6 +643,20 @@ public class ManagePlaylistsGUI extends javax.swing.JFrame {
     private void targetComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_targetComboBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_targetComboBoxActionPerformed
+
+    private void musicPlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_musicPlayerActionPerformed
+        // TODO add your handling code here:
+        Point currentLocation = this.getLocation();
+
+        this.setVisible(false);
+        this.dispose();
+
+        musicPlayerGUI playerGUI = new musicPlayerGUI(stackInterface, playlist1, playlist2);
+
+        playerGUI.setLocation(currentLocation);
+
+        playerGUI.setVisible(true);
+    }//GEN-LAST:event_musicPlayerActionPerformed
 
     /**
      * @param args the command line arguments
@@ -685,6 +713,8 @@ public class ManagePlaylistsGUI extends javax.swing.JFrame {
     private javax.swing.JPanel moveSongPanel;
     private javax.swing.JScrollPane musicManagerSP;
     private javax.swing.JTextArea musicManagerTA;
+    private javax.swing.JMenuItem musicPlayer;
+    private javax.swing.JMenu musicPlayerMenu;
     private javax.swing.JMenuBar navBar;
     private javax.swing.JLabel playlist1CountLabel;
     private javax.swing.JLabel playlist2CountLabel;
