@@ -626,6 +626,11 @@ public class ManagePlaylistsGUI extends javax.swing.JFrame {
             }
         }
 
+        if (sourcePlaylist == targetPlaylist && targetIndex == sourcePlaylist.size()+1){
+            musicManagerTA.setText("Invalid target index.");
+            return;
+        }
+        
         if (sourcePlaylist == targetPlaylist && sourceIndex == targetIndex) {
             musicManagerTA.setText("The song is already in the target position.");
             return;

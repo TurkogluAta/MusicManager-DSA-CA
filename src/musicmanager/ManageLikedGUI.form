@@ -112,11 +112,11 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                          <Component id="exitBtn" min="-2" pref="62" max="-2" attributes="0"/>
-                          <Component id="likedControlPanel" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="exitBtn" min="-2" pref="62" max="-2" attributes="0"/>
+                              <Component id="likedControlPanel" min="-2" max="-2" attributes="0"/>
                               <Component id="addLikedPanel" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
