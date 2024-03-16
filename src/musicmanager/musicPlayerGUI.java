@@ -12,11 +12,11 @@ import java.awt.Point;
  */
 public class musicPlayerGUI extends javax.swing.JFrame {
 
-    private StackInterface stackInterface;
-    private DLLinterface playlist1;
-    private DLLinterface playlist2;
-    private int currentSongIndex1;
-    private int currentSongIndex2;
+    private StackInterface stackInterface; // Interface for the stack that holds liked songs
+    private DLLinterface playlist1; // First playlist a doubly linked list
+    private DLLinterface playlist2; // Second playlist a doubly linked list
+    private int currentSongIndex1; // Current index for navigation in playlist1
+    private int currentSongIndex2; // Current index for navigation in playlist2
 
     /**
      * Creates new form musicPlayerGUI
@@ -26,8 +26,8 @@ public class musicPlayerGUI extends javax.swing.JFrame {
         this.stackInterface = stackInterface;
         this.playlist1 = playlist1;
         this.playlist2 = playlist2;
-        currentSongIndex1 = 1;
-        currentSongIndex2 = 0;
+        currentSongIndex1 = 1; // Initialize current song index for playlist2
+        currentSongIndex2 = 0; // Initialize current song index for playlist2
         playingSongLabel.setText("Select a playlist to listen to and press the Next button.");
     }
 
@@ -256,46 +256,44 @@ public class musicPlayerGUI extends javax.swing.JFrame {
 
     private void ManageLikedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ManageLikedActionPerformed
         // TODO add your handling code here:
-        Point currentLocation = this.getLocation();
+        Point currentLocation = this.getLocation(); // Store current GUI location
 
-        this.setVisible(false);
+        this.setVisible(false); // Hide the current GUI
         this.dispose();
 
+        // Create a new instance of the ManageLikedGUI and make it visible at the same location
         ManageLikedGUI manageLikedGUI = new ManageLikedGUI(stackInterface, playlist1, playlist2);
-
         manageLikedGUI.setLocation(currentLocation);
-
         manageLikedGUI.setVisible(true);
     }//GEN-LAST:event_ManageLikedActionPerformed
 
     private void managePlaylistsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_managePlaylistsActionPerformed
         // TODO add your handling code here:
-        Point currentLocation = this.getLocation();
+        Point currentLocation = this.getLocation(); // Store current GUI location
 
-        this.setVisible(false);
+        this.setVisible(false); // Hide the current GUI
         this.dispose();
 
+        // Create a new instance of the ManagePlaylistGUI and make it visible at the same location
         ManagePlaylistsGUI managePlaylistsGUI = new ManagePlaylistsGUI(stackInterface, playlist1, playlist2);
-
         managePlaylistsGUI.setLocation(currentLocation);
-
         managePlaylistsGUI.setVisible(true);
     }//GEN-LAST:event_managePlaylistsActionPerformed
 
     private void musicPlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_musicPlayerActionPerformed
         // TODO add your handling code here:
-        Point currentLocation = this.getLocation();
+        Point currentLocation = this.getLocation(); // Store current GUI location
 
-        this.setVisible(false);
+        this.setVisible(false); // Hide the current GUI
         this.dispose();
 
+        // Create a new instance of the musicPlayerGUI and make it visible at the same location
         musicPlayerGUI playerGUI = new musicPlayerGUI(stackInterface, playlist1, playlist2);
-
         playerGUI.setLocation(currentLocation);
-
         playerGUI.setVisible(true);
     }//GEN-LAST:event_musicPlayerActionPerformed
 
+    // Allows the user to toggle repeat functionality for the playlists
     private void repeatCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_repeatCheckBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_repeatCheckBoxActionPerformed
@@ -305,32 +303,43 @@ public class musicPlayerGUI extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_exitBtnActionPerformed
 
+    /**
+     * Advances to the next song in the currently selected playlist If the end
+     * of the playlist is reached it either stops or repeats based on the user's
+     * choice
+     */
     private void nextSongBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextSongBtnActionPerformed
         // TODO add your handling code here:
         int selectedIndex = playlistComboBox.getSelectedIndex();
 
-        if (selectedIndex == 0) {
+        if (selectedIndex == 0) { // For Playlist 1
 
-            if (!playlist1.isEmpty()) {
+            if (!playlist1.isEmpty()) { // Check if Playlist 1 is not empty
 
+                // If current song index exceeds the size of the playlist check for repeat
                 if (currentSongIndex1 > playlist1.size()) {
-                    if (repeatCheckBox.isSelected()) {
+
+                    if (repeatCheckBox.isSelected()) { // If repeat is selected start from the beginning
                         currentSongIndex1 = 1;
-                    } else {
+
+                    } else { // If not repeating
                         playingSongLabel.setText("End of Rock playlist.");
                         currentSongIndex1 = playlist1.size() + 1; // Reset for next action
                         return;
                     }
                 }
+
+                // Display the next song
                 DLLnode node = (DLLnode) playlist1.get(currentSongIndex1);
                 musicData songData = (musicData) node.getElement();
                 playingSongLabel.setText("Now playing: " + songData.toString());
-                currentSongIndex1++;
-            } else {
+                currentSongIndex1++; // Move to the next song index
+
+            } else { // If Playlist 1 is empty
                 playingSongLabel.setText("Rock playlist is empty.");
             }
-            
-        } else if (selectedIndex == 1) {
+
+        } else if (selectedIndex == 1) { // For Playlist 2
 
             if (!playlist2.isEmpty()) {
 
@@ -361,39 +370,52 @@ public class musicPlayerGUI extends javax.swing.JFrame {
     private void previousSongBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_previousSongBtnActionPerformed
         // TODO add your handling code here:                                          
         int selectedIndex = playlistComboBox.getSelectedIndex();
-        if (selectedIndex == 0) {
-            if (!playlist1.isEmpty()) {
+        if (selectedIndex == 0) { // For Playlist 1
+
+            if (!playlist1.isEmpty()) { // Check if Playlist 1 is not empty
+                // If the current song index is at the start and repeat is selected go to the last song
                 if (currentSongIndex1 <= 1) {
+
                     if (repeatCheckBox.isSelected()) {
                         currentSongIndex1 = playlist1.size();
-                    } else {
+
+                    } else { // If not repeating
                         playingSongLabel.setText("Start of Rock playlist.");
                         return;
                     }
                 } else {
-                    currentSongIndex1--;
+                    currentSongIndex1--; // Move to the previous song index
                 }
+                // Display the previous song
                 DLLnode node = (DLLnode) playlist1.get(currentSongIndex1);
                 musicData songData = (musicData) node.getElement();
                 playingSongLabel.setText("Now playing: " + songData.toString());
-            } else {
+
+            } else { // If Playlist 1 is empty
                 playingSongLabel.setText("Rock playlist is empty.");
             }
-        } else if (selectedIndex == 1) {
+
+        } else if (selectedIndex == 1) { // For Playlist 2
+
             if (!playlist2.isEmpty()) {
+
                 if (currentSongIndex2 <= 1) {
+
                     if (repeatCheckBox.isSelected()) {
                         currentSongIndex2 = playlist2.size();
+
                     } else {
                         playingSongLabel.setText("Start of Classical music playlist.");
                         return;
                     }
+
                 } else {
                     currentSongIndex2--;
                 }
                 DLLnode node = (DLLnode) playlist2.get(currentSongIndex2);
                 musicData songData = (musicData) node.getElement();
                 playingSongLabel.setText("Now playing: " + songData.toString());
+
             } else {
                 playingSongLabel.setText("Classical music playlist is empty.");
             }

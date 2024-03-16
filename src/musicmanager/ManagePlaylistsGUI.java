@@ -15,15 +15,22 @@ import javax.swing.JOptionPane;
  *
  * @author Ata Turkoglu
  */
+/**
+ * This class represents the GUI for a music player
+ */
 public class ManagePlaylistsGUI extends javax.swing.JFrame {
 
-    private StackInterface stackInterface;
-    private DLLinterface playlist1;
-    private DLLinterface playlist2;
+    private StackInterface stackInterface; // Interface for the stack that holds liked songs
+    private DLLinterface playlist1; // First playlist a doubly linked list
+    private DLLinterface playlist2; // Second playlist a doubly linked list
     private boolean otherButtonClicked;
 
     /**
      * Creates new form ManagePlaylistsGUI
+     */
+    /**
+     * This class provides a graphical user interface for managing music
+     * playlists.
      */
     public ManagePlaylistsGUI(StackInterface stackInterface, DLLinterface playlist1, DLLinterface playlist2) {
         this.stackInterface = stackInterface;
@@ -31,7 +38,7 @@ public class ManagePlaylistsGUI extends javax.swing.JFrame {
         this.playlist2 = playlist2;
         initComponents();
         otherButtonClicked = false;
-        musicCountPlaylist();
+        musicCountPlaylist(); // Updates the GUI to show the current number of songs in each playlist
     }
 
     /**
@@ -345,6 +352,7 @@ public class ManagePlaylistsGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    // Saves the current state of both playlists to a file
     private void Save() {
         File f;
         FileOutputStream fStream;
@@ -364,6 +372,7 @@ public class ManagePlaylistsGUI extends javax.swing.JFrame {
         }
     }
 
+    // Updates the labels to show the current number of songs in each playlist
     private void musicCountPlaylist() {
         int playlist1Count = playlist1.size();
         int playlist2Count = playlist2.size();
@@ -383,61 +392,84 @@ public class ManagePlaylistsGUI extends javax.swing.JFrame {
 
     private void addPlaylistBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPlaylistBtnActionPerformed
         // TODO add your handling code here:
+
+        // Clears the text area if another button was previously clicked
         if (otherButtonClicked) {
             musicManagerTA.setText("");
             otherButtonClicked = false;
         }
+
+        // Checks if there are any liked songs to add
         if (!stackInterface.isEmpty()) {
             musicData lastLikedSong;
+            // Peeks at the last liked song without removing it from the stack
             lastLikedSong = stackInterface.peek();
             String songName = lastLikedSong.getSongName();
+
+            // Checks if the song is already in either playlist to prevent duplicates
             int indexInPlaylist1 = playlist1.getIndex(songName);
             int indexInPlaylist2 = playlist2.getIndex(songName);
 
+            // Determines which playlist the user has selected to add the song to
             int selectedIndex = genreComboBox.getSelectedIndex();
 
+            // For Rock playlist
             if (selectedIndex == 0) {
                 if (indexInPlaylist1 > 0) {
                     musicManagerTA.append("The song is already in your Rock playlist.\n");
+
                 } else {
+                    // Adds the song to the end of Playlist 1 and updates the GUI
                     playlist1.add(playlist1.size() + 1, lastLikedSong);
                     musicManagerTA.append(lastLikedSong + " added to your Rock playlist.\n");
-                    musicCountPlaylist();
                 }
+
+                // For Classical music playlist.
             } else if (selectedIndex == 1) {
                 if (indexInPlaylist2 > 0) {
                     musicManagerTA.append("The song is already in your Classical music playlist. \n");
+
                 } else {
+                    // Adds the song to the end of Playlist 2 and updates the GUI
                     playlist2.add(playlist2.size() + 1, lastLikedSong);
                     musicManagerTA.append(lastLikedSong + " added to your Classical music playlist.\n");
-                    musicCountPlaylist();
                 }
             }
-            Save();
+            Save(); // Saves the updated playlists to a file
+            musicCountPlaylist();
         } else {
             musicManagerTA.setText("You don't have any liked songs.\n");
         }
     }//GEN-LAST:event_addPlaylistBtnActionPerformed
 
+    // Searches for a song in the playlists
     private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
         // TODO add your handling code here:
         otherButtonClicked = true;
+
+        // Proceeds only if at least one of the playlists is not empty
         if (!playlist1.isEmpty() || !playlist2.isEmpty()) {
             String searchTerm = JOptionPane.showInputDialog(null, "Please enter a search term.");
 
+            // Checks if a valid search term was entered
             if (searchTerm == null || searchTerm.isEmpty()) {
                 return;
             } else if (searchTerm != null && !searchTerm.trim().isEmpty()) {
+                // Searches for the song in both playlists
                 int indexInPlaylist1 = playlist1.getIndex(searchTerm);
                 int indexInPlaylist2 = playlist2.getIndex(searchTerm);
 
+                // Updates the GUI based on the search results
                 if (indexInPlaylist1 > 0 && indexInPlaylist2 > 0) {
                     musicManagerTA.setText("The song you are looking for is in position " + indexInPlaylist1 + " in the Rock playlist.\n\n");
                     musicManagerTA.append("The song you are looking for is in position " + indexInPlaylist2 + " in the Classical music playlist.");
+
                 } else if (indexInPlaylist1 > 0) {
                     musicManagerTA.setText("The song you are looking for is in position " + indexInPlaylist1 + " in the Rock playlist.");
+
                 } else if (indexInPlaylist2 > 0) {
                     musicManagerTA.setText("The song you are looking for is in position " + indexInPlaylist2 + " in the Classical music playlist.");
+
                 } else {
                     musicManagerTA.setText("This song is not in any of your playlists");
                 }
@@ -455,26 +487,34 @@ public class ManagePlaylistsGUI extends javax.swing.JFrame {
             musicManagerTA.setText("");
             otherButtonClicked = false;
         }
+
+        // Proceeds only if at least one of the playlists is not empty
         if (playlist1.isEmpty() && playlist2.isEmpty()) {
             musicManagerTA.setText("Your playlists are empty.");
             return;
         }
 
         String deleteTerm = JOptionPane.showInputDialog(null, "Please enter a song name for delete.");
+        // Checks if a valid song name was entered.
         if (deleteTerm == null || deleteTerm.trim().isEmpty()) {
             return;
         }
 
+        // Attempts to find and delete the song from the playlists
         int indexInPlaylist1 = playlist1.getIndex(deleteTerm);
         int indexInPlaylist2 = playlist2.getIndex(deleteTerm);
 
+        // If the same song is in both playlists
+        // Displays a dialog box with options to choose the playlist
         if (indexInPlaylist1 > 0 && indexInPlaylist2 > 0) {
             String[] options = {"Rock", "Classical Music"};
             int response = JOptionPane.showOptionDialog(null, "Which playlist would you like to delete the song from?", "Choose Playlist", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, null);
 
+            // '0' for Rock and '1' for Classical Music
             if (response == 0) {
                 musicData removedSong1 = playlist1.remove(indexInPlaylist1);
                 musicManagerTA.append(removedSong1.toString() + " deleted from your Rock playlist.\n");
+
             } else if (response == 1) {
                 musicData removedSong2 = playlist2.remove(indexInPlaylist2);
                 musicManagerTA.append(removedSong2.toString() + " deleted from your Classical music playlist.\n");
@@ -483,32 +523,42 @@ public class ManagePlaylistsGUI extends javax.swing.JFrame {
         } else if (indexInPlaylist1 > 0) {
             musicData removedSong1 = playlist1.remove(indexInPlaylist1);
             musicManagerTA.append(removedSong1.toString() + " deleted from your Rock playlist.\n");
+
         } else if (indexInPlaylist2 > 0) {
             musicData removedSong2 = playlist2.remove(indexInPlaylist2);
             musicManagerTA.append(removedSong2.toString() + " deleted from your Classical music playlist.\n");
+
         } else {
             musicManagerTA.append("This song is not in any of your playlists.\n");
         }
 
-        musicCountPlaylist();
-        Save();
+        musicCountPlaylist(); // Updates the song count for both playlists
+        Save(); // Saves the updated playlists to a file
     }//GEN-LAST:event_deleteBtnActionPerformed
+
 
     private void moveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moveBtnActionPerformed
         // TODO add your handling code here:
+        otherButtonClicked = true;
+
+        // Check if both playlists are empty. If so display a message and end the method early
         if (playlist1.isEmpty() && playlist2.isEmpty()) {
             musicManagerTA.setText("Your playlists are empty.");
             return;
         }
 
+        // Source and target playlist indexes based on user selection from combo boxes
         int sourcePlaylistIndex = sourceComboBox.getSelectedIndex();
         int targetPlaylistIndex = targetComboBox.getSelectedIndex();
 
+        // Get the source and target positions the user wants to move the song to and from
         int sourceIndex = (Integer) sourceSpinner.getValue();
         int targetIndex = (Integer) targetSpinner.getValue();
 
+        // Initialize variables for the source and target playlists
         DLLinterface sourcePlaylist = null, targetPlaylist = null;
 
+        // Assign the actual playlists based on the selected indexes
         if (sourcePlaylistIndex == 0) {
             sourcePlaylist = playlist1;
         } else if (sourcePlaylistIndex == 1) {
@@ -521,11 +571,13 @@ public class ManagePlaylistsGUI extends javax.swing.JFrame {
             targetPlaylist = playlist2;
         }
 
+        // If the source playlist is empty, notify the user and exit
         if (sourcePlaylist.isEmpty()) {
             musicManagerTA.setText("Source playlist is empty.");
             return;
         }
 
+        // Check for invalid move conditions and notify the user
         if (sourcePlaylist == targetPlaylist && sourcePlaylist.size() == 1) {
             if (Math.abs(sourceIndex - targetIndex) == 1) { // Kaynak ve hedef indeks arası fark 1 ise
                 musicManagerTA.setText("The playlist has only one song, so its position cannot change.");
@@ -538,7 +590,7 @@ public class ManagePlaylistsGUI extends javax.swing.JFrame {
             return;
         }
 
-        // Kaynak indeksin geçerliliğini kontrol et
+        // Validate source and target indexes for the move operation
         if (sourceIndex > sourcePlaylist.size()) {
             musicManagerTA.setText("Invalid source index.");
             return;
@@ -550,15 +602,18 @@ public class ManagePlaylistsGUI extends javax.swing.JFrame {
             return;
         }
 
+        // Attempt to move the song from the source to the target position
         musicData songMove = sourcePlaylist.remove(sourceIndex);
-        if (songMove != null) { // Şarkı başarıyla çıkarıldıysa
+        if (songMove != null) { // If the song was successfully removed from the source playlist
+
             if (targetPlaylist.getIndex(songMove.getSongName()) != -1) {
                 musicManagerTA.setText(songMove.toString() + " is already in the target playlist.");
+
             } else {
-                targetPlaylist.add(targetIndex, songMove);
+                targetPlaylist.add(targetIndex, songMove); // Add the song to the target playlist at specified index
                 musicManagerTA.setText(songMove.toString() + " successfully moved.");
-                musicCountPlaylist();
-                Save();
+                musicCountPlaylist(); // Update the display of song counts in playlists
+                Save(); // Save changes to the playlists
             }
         }
     }//GEN-LAST:event_moveBtnActionPerformed
@@ -567,13 +622,18 @@ public class ManagePlaylistsGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         otherButtonClicked = true;
         int selectedIndex;
-        selectedIndex = displayComboBox.getSelectedIndex();
+        selectedIndex = displayComboBox.getSelectedIndex(); // Gets the selected index to determine which playlist to display
+
+        // Checks which playlist is selected and whether it is empty
         if (selectedIndex == 0 && !playlist1.isEmpty()) {
             musicManagerTA.setText(playlist1.printList());
+
         } else if (selectedIndex == 0 && playlist1.isEmpty()) {
             musicManagerTA.setText("Rock playlist is empty.");
+
         } else if (selectedIndex == 1 && !playlist2.isEmpty()) {
             musicManagerTA.setText(playlist2.printList());
+
         } else if (selectedIndex == 1 && playlist2.isEmpty()) {
             musicManagerTA.setText("Classical music playlist is empty.");
         }
@@ -581,29 +641,27 @@ public class ManagePlaylistsGUI extends javax.swing.JFrame {
 
     private void ManageLikedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ManageLikedActionPerformed
         // TODO add your handling code here:
-        Point currentLocation = this.getLocation();
+        Point currentLocation = this.getLocation(); // Store current GUI location
 
-        this.setVisible(false);
+        this.setVisible(false); // Hide the current GUI
         this.dispose();
 
+        // Create a new instance of the ManageLikedGUI and make it visible at the same location
         ManageLikedGUI manageLikedGUI = new ManageLikedGUI(stackInterface, playlist1, playlist2);
-
         manageLikedGUI.setLocation(currentLocation);
-
         manageLikedGUI.setVisible(true);
     }//GEN-LAST:event_ManageLikedActionPerformed
 
     private void managePlaylistsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_managePlaylistsActionPerformed
         // TODO add your handling code here:
-        Point currentLocation = this.getLocation();
+        Point currentLocation = this.getLocation(); // Store current GUI location
 
-        this.setVisible(false);
+        this.setVisible(false); // Hide the current GUI
         this.dispose();
 
+        // Create a new instance of the ManagePlaylistGUI and make it visible at the same location
         ManagePlaylistsGUI managePlaylistsGUI = new ManagePlaylistsGUI(stackInterface, playlist1, playlist2);
-
         managePlaylistsGUI.setLocation(currentLocation);
-
         managePlaylistsGUI.setVisible(true);
     }//GEN-LAST:event_managePlaylistsActionPerformed
 
@@ -646,15 +704,14 @@ public class ManagePlaylistsGUI extends javax.swing.JFrame {
 
     private void musicPlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_musicPlayerActionPerformed
         // TODO add your handling code here:
-        Point currentLocation = this.getLocation();
+        Point currentLocation = this.getLocation(); // Store current GUI location
 
-        this.setVisible(false);
+        this.setVisible(false); // Hide the current GUI
         this.dispose();
 
+        // Create a new instance of the musicPlayerGUI and make it visible at the same location
         musicPlayerGUI playerGUI = new musicPlayerGUI(stackInterface, playlist1, playlist2);
-
         playerGUI.setLocation(currentLocation);
-
         playerGUI.setVisible(true);
     }//GEN-LAST:event_musicPlayerActionPerformed
 

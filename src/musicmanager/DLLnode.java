@@ -10,11 +10,12 @@ import java.io.Serializable;
  *
  * @author Ata Turkoglu
  */
+// Represents a node in a doubly linked list
 public class DLLnode implements Serializable {
 
-    private Object element;
-    private DLLnode next;
-    private DLLnode prev;
+    private Object element; // The data stored in this node
+    private DLLnode next; // Reference to the next node in the list
+    private DLLnode prev; // Reference to the previous node in the list
 
     public DLLnode(Object inElement, DLLnode inNext, DLLnode inPrev) {
         element = inElement;

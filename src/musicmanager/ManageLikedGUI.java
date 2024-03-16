@@ -15,12 +15,15 @@ import javax.swing.JOptionPane;
  *
  * @author Ata Turkoglu
  */
+/**
+ * A GUI for managing liked songs
+ */
 public class ManageLikedGUI extends javax.swing.JFrame {
 
-    private boolean otherButtonClicked;
-    private StackInterface stackInterface;
-    private DLLinterface playlist1;
-    private DLLinterface playlist2;
+    private boolean otherButtonClicked; // Tracks if any button other than the add/delete button has been clicked
+    private StackInterface stackInterface; // Interface for the stack that holds liked songs
+    private DLLinterface playlist1; // First playlist a doubly linked list
+    private DLLinterface playlist2; // Second playlist a doubly linked list
 
     /**
      * Creates new form ManagePlaylistGUI
@@ -31,7 +34,7 @@ public class ManageLikedGUI extends javax.swing.JFrame {
         this.playlist2 = playlist2;
         initComponents();
         otherButtonClicked = false;
-        musicCountLiked();
+        musicCountLiked(); // Display the count of liked songs
     }
 
     /**
@@ -288,6 +291,7 @@ public class ManageLikedGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    // Saves the liked songs list to a file
     private void Save() {
         File f;
         FileOutputStream fStream;
@@ -307,6 +311,7 @@ public class ManageLikedGUI extends javax.swing.JFrame {
         }
     }
 
+    // Saves both playlists to a file
     private void SavePlaylist() {
         File f;
         FileOutputStream fStream;
@@ -327,6 +332,7 @@ public class ManageLikedGUI extends javax.swing.JFrame {
         }
     }
 
+    // Updates the label to show the current number of liked songs
     private void musicCountLiked() {
         int likedCount = stackInterface.size();
 
@@ -339,42 +345,64 @@ public class ManageLikedGUI extends javax.swing.JFrame {
 
     private void stackAddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stackAddBtnActionPerformed
         // TODO add your handling code here:
+
+        // Extract the song name and artist from the text fields
         String songName = newMusicTF.getText().trim();
         String artistName = artistTF.getText().trim();
 
+        // Clear the text fields after getting their values
         newMusicTF.setText("");
         artistTF.setText("");
 
+        // If another button's action was previously performed clear the text area before displaying new information
         if (otherButtonClicked) {
             musicManagerTA.setText("");
             otherButtonClicked = false;
         }
 
+        // Check if the song name and artist name are not empty
         if (!songName.isEmpty() && !artistName.isEmpty()) {
+
+            // Create a new musicData object with the song and artist names
             musicData newMusic = new musicData(songName, artistName);
+            // Push the new musicData object onto the stack
             stackInterface.push(newMusic);
+            // Update the text area
             musicManagerTA.append(newMusic + " added to your liked list.\n");
+            // Save the updated stack to a file
             Save();
+            // Update the display of the total number of liked songs
             musicCountLiked();
+
         } else {
+            // If either the song name or artist name is empty
             musicManagerTA.append("Please fill in the required fields.\n");
         }
     }//GEN-LAST:event_stackAddBtnActionPerformed
 
     private void stackDltBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stackDltBtnActionPerformed
         // TODO add your handling code here:
+
+        // Clear the text area if a different button's action was displayed previously
         if (otherButtonClicked) {
             musicManagerTA.setText("");
             otherButtonClicked = false;
         }
 
+        // Check if the stack is not empty
         if (!stackInterface.isEmpty()) {
             musicData outLikedSong;
+            // Pop the last song added to the liked list
             outLikedSong = stackInterface.pop();
+            // Update the text area to show which song was deleted
             musicManagerTA.append(outLikedSong + " is deleted from your liked list.\n");
+            // Save the updated stack to a file
             Save();
+            // Update the display of the total number of liked songs
             musicCountLiked();
+
         } else {
+            // If the stack is empty, inform the user that there are no liked songs to delete
             musicManagerTA.setText("You don't have any liked song.\n");
             otherButtonClicked = true;
         }
@@ -382,31 +410,44 @@ public class ManageLikedGUI extends javax.swing.JFrame {
 
     private void stackDisplayBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stackDisplayBtnActionPerformed
         // TODO add your handling code here:
+
+        // Mark that the display button has been clicked
         otherButtonClicked = true;
+        // Check if the stack is not empty
         if (!stackInterface.isEmpty()) {
+            // Display all songs in the liked list
             String likedMusics = stackInterface.displayStack();
             musicManagerTA.setText(likedMusics);
+
         } else {
+            // If the stack is empty, inform the user
             musicManagerTA.setText("You don't have any liked song.");
         }
     }//GEN-LAST:event_stackDisplayBtnActionPerformed
 
     private void ClearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClearBtnActionPerformed
         // TODO add your handling code here:
+
+        // Mark that the other button has been clicked
         otherButtonClicked = true;
 
+        // Check if there's anything to clear in the liked list or either playlist
         if (!stackInterface.isEmpty() || !playlist1.isEmpty() || !playlist2.isEmpty()) {
+            // Confirm with the user that they want to delete all data
             int response = JOptionPane.showConfirmDialog(null, "All your playlists and liked list will be DELETED are you sure?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+            // If the user confirms clear the data
             if (response == JOptionPane.YES_OPTION) {
-                stackInterface.emptyStack();
-                playlist1.emptyPlaylist();
-                playlist2.emptyPlaylist();
+                stackInterface.emptyStack(); // Clear the liked songs stack
+                playlist1.emptyPlaylist(); // Clear the first playlist
+                playlist2.emptyPlaylist(); // Clear the second playlist
                 Save();
                 SavePlaylist();
                 musicCountLiked();
                 musicManagerTA.setText("All playlists and your liked list have been deleted.");
             }
         } else {
+            // Notify if there was nothing to clear
             musicManagerTA.setText("All your playlists are empty.");
         }
     }//GEN-LAST:event_ClearBtnActionPerformed
@@ -418,43 +459,40 @@ public class ManageLikedGUI extends javax.swing.JFrame {
 
     private void ManageLikedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ManageLikedActionPerformed
         // TODO add your handling code here:
-        Point currentLocation = this.getLocation();
+        Point currentLocation = this.getLocation(); // Store current GUI location
 
-        this.setVisible(false); // Mevcut GUI'yi gizle
+        this.setVisible(false); // Hide the current GUI
         this.dispose();
 
+        // Create a new instance of the ManageLikedGUI and make it visible at the same location
         ManageLikedGUI manageLikedGUI = new ManageLikedGUI(stackInterface, playlist1, playlist2);
-
         manageLikedGUI.setLocation(currentLocation);
-
         manageLikedGUI.setVisible(true);
     }//GEN-LAST:event_ManageLikedActionPerformed
 
     private void managePlaylistsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_managePlaylistsActionPerformed
         // TODO add your handling code here:
-        Point currentLocation = this.getLocation();
+        Point currentLocation = this.getLocation(); // Store current GUI location
 
-        this.setVisible(false);
+        this.setVisible(false); // Hide the current GUI
         this.dispose();
 
+        // Create a new instance of the ManagePlaylistGUI and make it visible at the same location
         ManagePlaylistsGUI managePlaylistsGUI = new ManagePlaylistsGUI(stackInterface, playlist1, playlist2);
-
         managePlaylistsGUI.setLocation(currentLocation);
-
         managePlaylistsGUI.setVisible(true);
     }//GEN-LAST:event_managePlaylistsActionPerformed
 
     private void musicPlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_musicPlayerActionPerformed
         // TODO add your handling code here:
-        Point currentLocation = this.getLocation();
+        Point currentLocation = this.getLocation(); // Store current GUI location.
 
-        this.setVisible(false);
+        this.setVisible(false); // Hide the current GUI
         this.dispose();
 
+        // Create a new instance of the musicPlayerGUI and make it visible at the same location
         musicPlayerGUI playerGUI = new musicPlayerGUI(stackInterface, playlist1, playlist2);
-
         playerGUI.setLocation(currentLocation);
-
         playerGUI.setVisible(true);
     }//GEN-LAST:event_musicPlayerActionPerformed
 

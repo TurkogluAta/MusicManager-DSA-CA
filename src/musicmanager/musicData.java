@@ -10,10 +10,14 @@ import java.io.Serializable;
  *
  * @author Ata Turkoglu
  */
+/**
+ * Represents the data for a music track including the song's name and artist's
+ * name
+ */
 public class musicData implements Serializable {
 
-    private String songName;
-    private String artistName;
+    private String songName; // The name of the song
+    private String artistName; // The name of the artist
 
     public musicData(String songName, String artistName) {
         this.songName = songName;

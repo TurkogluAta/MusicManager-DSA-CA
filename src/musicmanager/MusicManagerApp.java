@@ -14,20 +14,26 @@ import javax.swing.JOptionPane;
  *
  * @author Ata Turkoglu
  */
+/**
+ * Main application to manage music playlists and liked songs.
+ */
 public class MusicManagerApp {
 
-    private static StackInterface stackInterface;
-    private static DLLinterface playlist1;
-    private static DLLinterface playlist2;
+    private static StackInterface stackInterface; // Stack for liked songs
+    private static DLLinterface playlist1; // First playlist
+    private static DLLinterface playlist2; // Second playlist
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         // TODO code application logic here
+
+        // Load liked songs and playlists from files
         loadLiked();
         loadPlaylist();
 
+        // If any list is not loaded, create new
         if (stackInterface == null) {
             stackInterface = new LikedMusicStack();
         }
@@ -38,36 +44,39 @@ public class MusicManagerApp {
             playlist2 = new PlaylistDLL();
         }
 
+        // Show manage liked songs GUI
         ManageLikedGUI manageLikedGUI = new ManageLikedGUI(stackInterface, playlist1, playlist2);
         manageLikedGUI.setVisible(true);
     }
 
+    // Loads liked songs from a file
     private static void loadLiked() {
         File f = new File("MusicManager.dat");
 
-        if (f.exists()) {
+        if (f.exists()) { // Check if file exists
             try {
-                FileInputStream fStream = new FileInputStream(f);
-                ObjectInputStream oStream = new ObjectInputStream(fStream);
-                stackInterface = (LikedMusicStack) oStream.readObject();
-                oStream.close();
-            } catch (IOException | ClassNotFoundException e) {
-                JOptionPane.showMessageDialog(null, e, "Warning", JOptionPane.WARNING_MESSAGE);
+                FileInputStream fStream = new FileInputStream(f); // Open file input stream
+                ObjectInputStream oStream = new ObjectInputStream(fStream); // Create object input stream
+                stackInterface = (LikedMusicStack) oStream.readObject(); // Read liked songs stack
+                oStream.close(); // Close the stream
+            } catch (IOException | ClassNotFoundException e) { // Catch any errors
+                JOptionPane.showMessageDialog(null, e, "Warning", JOptionPane.WARNING_MESSAGE); // Show warning message
             }
         }
     }
 
+    // Loads playlists from a file
     private static void loadPlaylist() {
         File f = new File("MusicManager2.dat");
-        if (f.exists()) {
+        if (f.exists()) { // Check if file exists
             try {
-                FileInputStream fStream = new FileInputStream(f);
-                ObjectInputStream oStream = new ObjectInputStream(fStream);
-                playlist1 = (PlaylistDLL) oStream.readObject();
-                playlist2 = (PlaylistDLL) oStream.readObject();
-                oStream.close();
-            } catch (IOException | ClassNotFoundException e) {
-                JOptionPane.showMessageDialog(null, e, "Warning", JOptionPane.WARNING_MESSAGE);
+                FileInputStream fStream = new FileInputStream(f); // Open file input stream
+                ObjectInputStream oStream = new ObjectInputStream(fStream); // Create object input stream
+                playlist1 = (PlaylistDLL) oStream.readObject(); // Read first playlist
+                playlist2 = (PlaylistDLL) oStream.readObject(); // Read second playlist
+                oStream.close(); // Close the stream
+            } catch (IOException | ClassNotFoundException e) { // Catch any errors
+                JOptionPane.showMessageDialog(null, e, "Warning", JOptionPane.WARNING_MESSAGE); // Show warning message
             }
         }
     }
