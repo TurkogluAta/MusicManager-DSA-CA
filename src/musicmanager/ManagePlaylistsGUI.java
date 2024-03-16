@@ -51,6 +51,7 @@ public class ManagePlaylistsGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         mainPanel = new javax.swing.JPanel();
+        appLabel = new javax.swing.JLabel();
         addPlaylistPanel = new javax.swing.JPanel();
         addPlaylistBtn = new javax.swing.JButton();
         genreComboBox = new javax.swing.JComboBox<>();
@@ -58,8 +59,6 @@ public class ManagePlaylistsGUI extends javax.swing.JFrame {
         playlist2CountLabel = new javax.swing.JLabel();
         searchBtn = new javax.swing.JButton();
         deleteBtn = new javax.swing.JToggleButton();
-        appLabel = new javax.swing.JLabel();
-        exitBtn = new javax.swing.JButton();
         playlistControlPanel = new javax.swing.JPanel();
         displayComboBox = new javax.swing.JComboBox<>();
         displayPlaylistBtn = new javax.swing.JButton();
@@ -72,6 +71,7 @@ public class ManagePlaylistsGUI extends javax.swing.JFrame {
         targetComboBox = new javax.swing.JComboBox<>();
         sourceSpinner = new javax.swing.JSpinner();
         targetSpinner = new javax.swing.JSpinner();
+        exitBtn = new javax.swing.JButton();
         navBar = new javax.swing.JMenuBar();
         manageLikedMenu = new javax.swing.JMenu();
         ManageLiked = new javax.swing.JMenuItem();
@@ -81,12 +81,16 @@ public class ManagePlaylistsGUI extends javax.swing.JFrame {
         musicPlayer = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         mainPanel.setBackground(new java.awt.Color(51, 51, 51));
 
+        appLabel.setBackground(new java.awt.Color(204, 204, 204));
+        appLabel.setFont(new java.awt.Font("Helvetica Neue", 1, 24)); // NOI18N
+        appLabel.setText("Music Manager App");
+
         addPlaylistPanel.setBackground(new java.awt.Color(102, 255, 102));
         addPlaylistPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        addPlaylistPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         addPlaylistBtn.setText("Add playlist");
         addPlaylistBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -95,7 +99,6 @@ public class ManagePlaylistsGUI extends javax.swing.JFrame {
                 addPlaylistBtnActionPerformed(evt);
             }
         });
-        addPlaylistPanel.add(addPlaylistBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, 130, -1));
 
         genreComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Rock", "Classical music" }));
         genreComboBox.addActionListener(new java.awt.event.ActionListener() {
@@ -103,40 +106,70 @@ public class ManagePlaylistsGUI extends javax.swing.JFrame {
                 genreComboBoxActionPerformed(evt);
             }
         });
-        addPlaylistPanel.add(genreComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, -1));
 
         playlist1CountLabel.setText(" You currently have \"x\" songs in your Rock playlist.");
-        addPlaylistPanel.add(playlist1CountLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
         playlist2CountLabel.setText(" You currently have \"x\" songs in your Classical music playlist.");
-        addPlaylistPanel.add(playlist2CountLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
 
         searchBtn.setText("Search");
         searchBtn.setToolTipText("");
+        searchBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         searchBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchBtnActionPerformed(evt);
             }
         });
-        addPlaylistPanel.add(searchBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 130, -1));
 
         deleteBtn.setText("Delete");
+        deleteBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         deleteBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteBtnActionPerformed(evt);
             }
         });
-        addPlaylistPanel.add(deleteBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 90, 130, -1));
 
-        appLabel.setFont(new java.awt.Font("Helvetica Neue", 1, 24)); // NOI18N
-        appLabel.setText("Music Manager App");
-
-        exitBtn.setText("Exit");
-        exitBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exitBtnActionPerformed(evt);
-            }
-        });
+        javax.swing.GroupLayout addPlaylistPanelLayout = new javax.swing.GroupLayout(addPlaylistPanel);
+        addPlaylistPanel.setLayout(addPlaylistPanelLayout);
+        addPlaylistPanelLayout.setHorizontalGroup(
+            addPlaylistPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(addPlaylistPanelLayout.createSequentialGroup()
+                .addGroup(addPlaylistPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(addPlaylistPanelLayout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(playlist1CountLabel))
+                    .addGroup(addPlaylistPanelLayout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(playlist2CountLabel))
+                    .addGroup(addPlaylistPanelLayout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addGroup(addPlaylistPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(addPlaylistPanelLayout.createSequentialGroup()
+                                .addGap(143, 143, 143)
+                                .addComponent(addPlaylistBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(genreComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(addPlaylistPanelLayout.createSequentialGroup()
+                                .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(10, Short.MAX_VALUE))
+        );
+        addPlaylistPanelLayout.setVerticalGroup(
+            addPlaylistPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(addPlaylistPanelLayout.createSequentialGroup()
+                .addGap(8, 8, 8)
+                .addComponent(playlist1CountLabel)
+                .addGap(3, 3, 3)
+                .addComponent(playlist2CountLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addGroup(addPlaylistPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addPlaylistBtn)
+                    .addComponent(genreComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(7, 7, 7)
+                .addGroup(addPlaylistPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(deleteBtn)
+                    .addComponent(searchBtn))
+                .addContainerGap())
+        );
 
         playlistControlPanel.setBackground(new java.awt.Color(102, 255, 102));
         playlistControlPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -149,6 +182,7 @@ public class ManagePlaylistsGUI extends javax.swing.JFrame {
         });
 
         displayPlaylistBtn.setText("Display Playlist");
+        displayPlaylistBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         displayPlaylistBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 displayPlaylistBtnActionPerformed(evt);
@@ -156,6 +190,7 @@ public class ManagePlaylistsGUI extends javax.swing.JFrame {
         });
 
         displayPlaylistBwdBtn.setText("Display Playlist Backward");
+        displayPlaylistBwdBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         displayPlaylistBwdBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 displayPlaylistBwdBtnActionPerformed(evt);
@@ -173,16 +208,14 @@ public class ManagePlaylistsGUI extends javax.swing.JFrame {
             playlistControlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(playlistControlPanelLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addGroup(playlistControlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(displayComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(playlistControlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(playlistControlPanelLayout.createSequentialGroup()
-                        .addComponent(displayPlaylistBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(displayPlaylistBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(displayPlaylistBwdBtn))
-                    .addGroup(playlistControlPanelLayout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(musicManagerSP)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(musicManagerSP)
+                    .addComponent(displayComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         playlistControlPanelLayout.setVerticalGroup(
             playlistControlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -193,15 +226,16 @@ public class ManagePlaylistsGUI extends javax.swing.JFrame {
                 .addGroup(playlistControlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(displayPlaylistBtn)
                     .addComponent(displayPlaylistBwdBtn))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addComponent(musicManagerSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(musicManagerSP, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         moveSongPanel.setBackground(new java.awt.Color(102, 255, 102));
         moveSongPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         moveBtn.setText("Move");
+        moveBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         moveBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 moveBtnActionPerformed(evt);
@@ -230,75 +264,82 @@ public class ManagePlaylistsGUI extends javax.swing.JFrame {
         moveSongPanel.setLayout(moveSongPanelLayout);
         moveSongPanelLayout.setHorizontalGroup(
             moveSongPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, moveSongPanelLayout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(moveSongPanelLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
                 .addGroup(moveSongPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(moveBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(moveSongPanelLayout.createSequentialGroup()
-                        .addGroup(moveSongPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(targetComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(sourceComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(moveSongPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(sourceSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(targetSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(14, 14, 14))
+                        .addComponent(moveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(8, 8, 8))
+                    .addGroup(moveSongPanelLayout.createSequentialGroup()
+                        .addGroup(moveSongPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(sourceComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(targetComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(moveSongPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(targetSpinner)
+                            .addComponent(sourceSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
         moveSongPanelLayout.setVerticalGroup(
             moveSongPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(moveSongPanelLayout.createSequentialGroup()
-                .addGap(17, 17, 17)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, moveSongPanelLayout.createSequentialGroup()
+                .addContainerGap(13, Short.MAX_VALUE)
                 .addGroup(moveSongPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(sourceComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(sourceSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(moveSongPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(targetComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(targetSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(moveSongPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(targetSpinner, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(targetComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(moveBtn)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap())
         );
+
+        exitBtn.setText("Exit");
+        exitBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGap(144, 144, 144)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(appLabel)
-                .addGap(73, 166, Short.MAX_VALUE))
-            .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(exitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(67, 67, 67)
-                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(playlistControlPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(addPlaylistPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(moveSongPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addGap(153, 153, 153))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
+                .addGap(0, 81, Short.MAX_VALUE)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(exitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(addPlaylistPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(mainPanelLayout.createSequentialGroup()
+                            .addGap(50, 50, 50)
+                            .addComponent(moveSongPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(playlistControlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(75, 75, 75))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addGap(20, 20, 20)
                 .addComponent(appLabel)
                 .addGap(18, 18, 18)
-                .addComponent(addPlaylistPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(addPlaylistPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25)
                 .addComponent(moveSongPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(playlistControlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(playlistControlPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(84, 84, 84)
                 .addComponent(exitBtn)
-                .addContainerGap())
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
-        navBar.setBackground(new java.awt.Color(102, 102, 102));
+        navBar.setBackground(new java.awt.Color(204, 204, 204));
 
         manageLikedMenu.setText("Manage Liked");
 
@@ -342,7 +383,7 @@ public class ManagePlaylistsGUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
