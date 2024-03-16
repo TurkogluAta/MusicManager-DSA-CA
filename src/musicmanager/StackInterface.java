@@ -9,12 +9,20 @@ package musicmanager;
  * @author Ata Turkoglu
  */
 interface StackInterface {
-    public void push(Object newMusic);    
-    public Object pop();    
-    public Object peek();    
-    public int size();    
-    public boolean isEmpty();    
-    public boolean isFull();    
-    public void emptyStack();   
+
+    public void push(musicData newMusic);
+
+    public musicData pop();
+
+    public musicData peek();
+
+    public int size();
+
+    public boolean isEmpty();
+
+    public boolean isFull();
+
+    public void emptyStack();
+
     public String displayStack();
 }

@@ -12,18 +12,17 @@ import java.util.ArrayList;
  * @author Ata Turkoglu
  */
 public class LikedMusicStack implements StackInterface, Serializable {
-    private ArrayList<String> myStack;
-    
-    
-    // Create a new instance of Stack
+
+    private ArrayList<musicData> myStack;
+
     public LikedMusicStack() {
-        myStack = new ArrayList<String>();
+        myStack = new ArrayList<>();
     }
-    
+
     public int size() {
         return myStack.size();
     }
-    
+
     public boolean isEmpty() {
         return myStack.isEmpty();
     }
@@ -31,38 +30,34 @@ public class LikedMusicStack implements StackInterface, Serializable {
     public boolean isFull() {
         return false;
     }
-    
-    //(myStack.size() - 1))
-    public Object pop() {
-        if(!myStack.isEmpty()){
+
+    public musicData pop() {
+        if (!myStack.isEmpty()) {
             return myStack.remove(0);
         } else {
             return null;
         }
     }
-    
-    //(myStack.size() - 1))
-    public Object peek() {
-        if(!myStack.isEmpty()){
-           return myStack.get(0);
+
+    public musicData peek() {
+        if (!myStack.isEmpty()) {
+            return myStack.get(0);
         } else {
             return null;
         }
     }
-    
-    //(myStack.size() - 1))
-    public void push(Object newMusic) {
-        myStack.add(0, (String) newMusic);
+
+    public void push(musicData newMusic) {
+        myStack.add(0, newMusic);
     }
 
     public void emptyStack() {
-       while(!myStack.isEmpty()){
-           pop();
-       }
+        while (!myStack.isEmpty()) {
+            pop();
+        }
     }
 
-    /* 
-    
+    /*
     The function of the method is to add the elements in the ArrayList to a 
     String and return them by concatenating them. This method is functionally 
     correct and produces the desired result; However, it has some minor drawbacks
@@ -78,17 +73,17 @@ public class LikedMusicStack implements StackInterface, Serializable {
         }
         return(sResult);
     }
-    */
-    
-    /* On the other hand, StringBuilder's append method directly adds value to 
+     */
+    /*
+    On the other hand, StringBuilder's append method directly adds value to 
     the existing buffer and does not create a new String object. This means better
     performance, especially when working with large data sets.
     */
-
+    
     public String displayStack() {
         StringBuilder displayBuilder = new StringBuilder();
         displayBuilder.append("Songs in your liked songs list: \n");
-        for(String musicItem : myStack) {
+        for (musicData musicItem : myStack) {
             displayBuilder.append(musicItem);
             displayBuilder.append("\n");
         }

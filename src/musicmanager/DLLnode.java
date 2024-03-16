@@ -8,13 +8,14 @@ import java.io.Serializable;
 
 /**
  *
- * @author ataturkoglu
+ * @author Ata Turkoglu
  */
-public class DLLnode implements Serializable{
+public class DLLnode implements Serializable {
+
     private Object element;
     private DLLnode next;
     private DLLnode prev;
-    
+
     public DLLnode(Object inElement, DLLnode inNext, DLLnode inPrev) {
         element = inElement;
         next = inNext;
@@ -44,5 +45,5 @@ public class DLLnode implements Serializable{
     public void setPrev(DLLnode prev) {
         this.prev = prev;
     }
-    
+
 }

@@ -9,11 +9,22 @@ package musicmanager;
  * @author Ata Turkoglu
  */
 interface DLLinterface {
+
     public void add(int iIndex, Object element);
-    public boolean remove(int iIndex);
+
+    public musicData remove(int iIndex);
+
     public Object get(int iIndex);
+
     public int size();
+
     public boolean isEmpty();
+
     public String printList();
-    public boolean contains(Object element);
+
+    public String printListBack();
+
+    public int getIndex(String songName);
+
+    public void emptyPlaylist();
 }
